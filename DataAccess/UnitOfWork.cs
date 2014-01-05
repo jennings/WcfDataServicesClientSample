@@ -30,7 +30,18 @@ namespace WcfDataServicesClientSample
         public UnitOfWork(DataServiceContext context)
         {
             this.context = context;
+
+            // Our models may not have every property defined on them
             this.context.IgnoreMissingProperties = true;
+
+            // Without this, update queries send DataServiceVersion: 1.0.
+            // There may be a better way of dealing with this, but
+            // this is the only remedy I was able to find.
+            // See: http://stackoverflow.com/a/17846697/19818
+            this.context.SendingRequest2 += (sender, args) =>
+            {
+                args.RequestMessage.SetHeader("DataServiceVersion", "3.0;NetFx");
+            };
 
             this.Products = new ProductRepository(context);
         }
@@ -43,6 +54,15 @@ namespace WcfDataServicesClientSample
         public void SaveChanges()
         {
             this.context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Indicates that the entity should be updated when SaveChanges is called.
+        /// </summary>
+        /// <param name="entity">The entity to be updated.</param>
+        public void UpdateObject(object entity)
+        {
+            this.context.UpdateObject(entity);
         }
     }
 }

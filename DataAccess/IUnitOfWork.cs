@@ -28,5 +28,11 @@ namespace WcfDataServicesClientSample
         /// Saves all changes that have been made to entities retrieved from the repositories.
         /// </summary>
         void SaveChanges();
+
+        /// <summary>
+        /// Indicates that the entity should be updated when SaveChanges is called.
+        /// </summary>
+        /// <param name="entity">The entity to be updated.</param>
+        void UpdateObject(object entity);
     }
 }
