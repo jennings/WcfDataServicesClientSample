@@ -11,6 +11,7 @@ namespace WcfDataServicesClientSample
     using System;
     using System.Collections.Generic;
     using System.Data.Services.Client;
+    using System.Data.Services.Common;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace WcfDataServicesClientSample
         /// <returns>A unit of work which accesses the given URI.</returns>
         public static IUnitOfWork Build(Uri uri)
         {
-            var context = new DataServiceContext(uri);
+            var context = new DataServiceContext(uri, DataServiceProtocolVersion.V3);
             return new UnitOfWork(context);
         }
     }

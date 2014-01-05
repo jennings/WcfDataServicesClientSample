@@ -30,6 +30,7 @@ namespace WcfDataServicesClientSample
         public UnitOfWork(DataServiceContext context)
         {
             this.context = context;
+            this.context.IgnoreMissingProperties = true;
 
             this.Products = new ProductRepository(context);
         }
