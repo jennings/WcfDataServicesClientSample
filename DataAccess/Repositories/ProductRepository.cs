@@ -38,7 +38,8 @@ namespace WcfDataServicesClientSample.Repositories
         {
             get
             {
-                throw new NotImplementedException();
+                // When someone queries, we ferry it to the DataServiceContext
+                return this.context.CreateQuery<Product>(ENTITY_NAME);
             }
         }
     }
