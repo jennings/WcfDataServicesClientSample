@@ -20,5 +20,6 @@ namespace WcfDataServicesClientSample.Repositories
     /// </summary>
     public interface IProductRepository : IRepository<Product>
     {
+        IQueryable<Product> QueryableWithDetails { get; }
     }
 }

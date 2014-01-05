@@ -45,5 +45,22 @@ namespace WcfDataServicesClientSample.Tests
             var newProduct = uow.Products.Queryable.Where(p => p.ID == id).First();
             Assert.AreEqual(newPrice, newProduct.Price, 0.001);
         }
+
+        [Test]
+        public void CanUpdatePropertiesOnRelatedEntities()
+        {
+            var id = 5;
+            var newDetails = Guid.NewGuid().ToString();
+
+            var product = uow.Products.QueryableWithDetails.Where(p => p.ID == id).First();
+            product.ProductDetail.Details = newDetails;
+            uow.UpdateObject(product);
+            uow.SaveChanges();
+
+            SetUp(); // Create a new UnitOfWork
+
+            var newProduct = uow.Products.QueryableWithDetails.Where(p => p.ID == id).First();
+            Assert.AreEqual(newDetails, newProduct.ProductDetail.Details);
+        }
     }
 }

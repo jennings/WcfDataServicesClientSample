@@ -65,5 +65,19 @@ namespace WcfDataServicesClientSample.Tests
             var result = uow.Products.Queryable.Where(p => p.Rating == 3).First();
             Assert.AreNotEqual(0.0, result.Price);
         }
+
+        [Test(Description = "Verifies that one-to-one navigational properties can be populated")]
+        public void OneToOneNavigationalPropertiesAreReturned()
+        {
+            var product = uow.Products.QueryableWithDetails.Where(p => p.ID == 1).First();
+            Assert.IsNotNull(product.ProductDetail);
+        }
+
+        [Test(Description = "Verifies that one-to-one navigational properties have the correct data")]
+        public void OneToOneNavigationalPropertiesArePopulatedCorrectly()
+        {
+            var product = uow.Products.QueryableWithDetails.Where(p => p.ID == 1).First();
+            Assert.AreEqual(product.ID, product.ProductDetail.ProductID);
+        }
     }
 }

@@ -42,5 +42,14 @@ namespace WcfDataServicesClientSample.Repositories
                 return this.context.CreateQuery<Product>(ENTITY_NAME);
             }
         }
+
+        public IQueryable<Product> QueryableWithDetails
+        {
+            get
+            {
+                return this.context.CreateQuery<Product>(ENTITY_NAME)
+                    .Expand(p => p.ProductDetail);
+            }
+        }
     }
 }
